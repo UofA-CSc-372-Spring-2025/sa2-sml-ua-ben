@@ -1,7 +1,7 @@
 (* Solutions to SA2 assignment, Intro to ML *)
 
 (* Name: Benjmain Seckeler                                    *)
-(* Time spent on HW6:
+(* Time spent on HW6: 3
 *)
 
 (* Collaborators and references:
@@ -61,18 +61,32 @@ val () =
     true
 
 (**** Problem C ****)
-(*
-fun reverse xs = xs
+
+fun reverse [] = []
+  | reverse (x) = foldl(fn (x, acc) => x :: acc) [] x;
+
+val () =
+  Unit.checkExpectWith (Unit.listString Int.toString) 
+  "reverse [] should be []"
+  (fn () => reverse [])
+  []
 
 val () =
   Unit.checkExpectWith (Unit.listString Int.toString) 
   "reverse [1,2] should be [2,1]"
   (fn () => reverse [1,2])
   [2,1]
-*)
+
+val () =
+  Unit.checkExpectWith (Unit.listString Int.toString) 
+  "reverse [1, 32, 4, 5] should be [5, 4, 32,1]"
+  (fn () => reverse [1, 32, 4, 5])
+  [5,4,32,1]
+
 (**** Problem D ****)
-(*
-fun minlist _ = 0
+
+fun minlist [] = raise Match
+  | minlist (x) = foldl(fn(x, acc) => Int.min(x, acc)) 0 x; 
 
 val () =
   Unit.checkExnWith Int.toString
@@ -84,7 +98,7 @@ val () =
   "minlist [1,2,3,4,0] should be 0"
   (fn () => minlist [1,2,3,4,0])
   0
-*)
+
 (**** Problem E ****)
 (*
 exception Mismatch
