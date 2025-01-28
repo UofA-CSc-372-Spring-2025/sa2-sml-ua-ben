@@ -1,6 +1,6 @@
 (* Solutions to SA2 assignment, Intro to ML *)
 
-(* Name:                                    *)
+(* Name: Benjmain Seckeler                                    *)
 (* Time spent on HW6:
 *)
 
@@ -20,16 +20,46 @@ val () =
     (fn () => mynull [])
     true
 
+val () = 
+    Unit.checkExpectWith Bool.toString "mynull [1,2] should be false"
+	(fn () => mynull [1, 2])
+    false
+
+val () = 
+    Unit.checkExpectWith Bool.toString "mynull [1] should be false"
+	(fn () => mynull [1])
+    false
 
 (**** Problem B ****)
-(*
-fun firstVowel _ = false
+
+val vowels = [#"a", #"e", #"i", #"o", #"u"]
+
+fun isVowel (c, []) = false
+  | isVowel (c, x::xs) = (c = x) orelse (isVowel (c, xs));
+
+fun firstVowel [] = false
+  | firstVowel (x::_) = isVowel(x, vowels);
 
 val () =
-    Unit.checkExpectWith Bool.toString "firstVowel 'ack' should be true"
+    Unit.checkExpectWith Bool.toString "firstvowel '' should be false"
+    (fn () => firstVowel [])
+    false
+
+val () =
+    Unit.checkExpectWith Bool.toString "firstvowel 'ick' should be true"
+    (fn () => firstVowel [#"i",#"c",#"k"])
+    true
+
+val () =
+    Unit.checkExpectWith Bool.toString "firstvowel 'yck' should be false"
+    (fn () => firstVowel [#"y",#"c",#"k"])
+    false
+
+val () =
+    Unit.checkExpectWith Bool.toString "firstvowel 'ack' should be true"
     (fn () => firstVowel [#"a",#"c",#"k"])
     true
-*)
+
 (**** Problem C ****)
 (*
 fun reverse xs = xs
