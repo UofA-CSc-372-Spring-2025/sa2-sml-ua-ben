@@ -119,9 +119,6 @@ fun zip [] [] = []
 
 fun tupleToString(x, y) = "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")";
 
-val a = zip [3,2] [2,1];
-printTuple(List.nth (a, 1));
-
 (* TODO : Test cases for this *)
 
 (*
@@ -140,16 +137,35 @@ val () =
   [(0, 1), (1, 0)]
   *)
 (**** Problem F ****)
-(*
 
-  | zip [] x = raise Mismatch
-  | zip x [] = raise Mismatch
-  | zip _ x = raise Mismatch
-  | zip x _ = raise Mismatch
+fun concat (x::[]) = x
+  | concat [] = []
+  | concat (x::xs) = x @ concat xs;
+
+	(*
+	* so first we have a HEAD @ concat(TAIL)
+	* bassis : empty 
+	* *)
+
+val () =
+  Unit.checkExpectWith (Unit.listString Int.toString) 
+  "concat 1"
+  (fn () => concat [[1], [], [2], [3, 4]])
+  [1,2,3,4]
+
+val () =
+  Unit.checkExpectWith (Unit.listString Int.toString) 
+  "concat 2"
+  (fn () => concat [])
+  []
 
 
-fun concat xs = xs
-*)
+val () =
+  Unit.checkExpectWith (Unit.listString Int.toString) 
+  "concat 3"
+  (fn () => concat  [[1], [2, 3, 4], [], [5, 6]])
+  [1, 2, 3, 4, 5, 6];
+
 (**** Problem G ****)
 (*
 fun isDigit _    = false;
