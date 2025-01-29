@@ -1,7 +1,7 @@
 (* Solutions to SA2 assignment, Intro to ML *)
 
 (* Name: Benjmain Seckeler                                    *)
-(* Time spent on HW6: 4
+(* Time spent on HW6: 6
 *)
 
 (* Collaborators and references:
@@ -199,6 +199,7 @@ val () =
   true;
 
 (**** Problem H ****)
+
 fun isAlpha c = (Char.ord (c) >= Char.ord(#"a") andalso Char.ord(c) <=
 	Char.ord(#"z")) orelse (Char.ord (c) >= Char.ord(#"A") andalso Char.ord(c)
 	<= Char.ord(#"Z"));
@@ -253,14 +254,6 @@ val () =
 
 (**** Problem I ****)
 
-(* 
-> svgCircle (120, 150, 60, "white");
-val it = "<circle cx=\"120\" cy=\"150\" r=\"60\" fill=\"white\" />" : string
-
-svgCircle (200, 300, 100, "red");
-val it = "<circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />" : string
- *)
-
 fun svgCircle (cx, cy, r, fill) = (
 let
 	val cx_str : string = Int.toString cx;
@@ -278,15 +271,20 @@ val () =
   "<circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />";
 
 (**** Problem J ****)
-(*
-fun partition p (x :: xs) = ([],[])
+
+fun partitionByValue p v [] = []
+  | partitionByValue p v (x::xs) = (if p x = v then x :: partitionByValue p v xs
+									else partitionByValue p v xs)
+
+(* Could probably also do this with folding, but this way feels a bit more
+* resusable. *)
+fun partition p x = (partitionByValue p true x, partitionByValue p false x);
 
 val () =
   Unit.checkExpectWith (fn (l1, l2) => "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")")
   "partition (fn x => x mod 2 = 0) [1, 2, 3, 4, 5] should return ([2, 4], [1, 3, 5])"
   (fn () => partition (fn x => x mod 2 = 0) [1, 2, 3, 4, 5])
   ([2, 4], [1, 3, 5]);
-*)
 
 (* Unit testing reporting *)
 
