@@ -167,23 +167,116 @@ val () =
   [1, 2, 3, 4, 5, 6];
 
 (**** Problem G ****)
-(*
-fun isDigit _    = false;
-*)
+
+fun isDigit #"0" = true
+  | isDigit #"1" = true
+  | isDigit #"2" = true
+  | isDigit #"3" = true
+  | isDigit #"4" = true
+  | isDigit #"5" = true
+  | isDigit #"6" = true
+  | isDigit #"7" = true
+  | isDigit #"8" = true
+  | isDigit #"9" = true
+  | isDigit _ = false;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isDigit Z"
+  (fn () => isDigit #"Z")
+  false;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isDigit A"
+  (fn () => isDigit #"A")
+  false;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isDigit 0"
+  (fn () => isDigit #"0")
+  true;
+
 (**** Problem H ****)
-(*
-fun isAlpha c = false
-*)
+fun isAlpha c = (Char.ord (c) >= Char.ord(#"a") andalso Char.ord(c) <=
+	Char.ord(#"z")) orelse (Char.ord (c) >= Char.ord(#"A") andalso Char.ord(c)
+	<= Char.ord(#"Z"));
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha a"
+  (fn () => isAlpha #"a")
+  true;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha g"
+  (fn () => isAlpha #"g")
+  true;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha z"
+  (fn () => isAlpha #"z")
+  true;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha K"
+  (fn () => isAlpha #"K")
+  true;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha Z"
+  (fn () => isAlpha #"Z")
+  true;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha A"
+  (fn () => isAlpha #"A")
+  true;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha *"
+  (fn () => isAlpha #"*")
+  false;
+
+val () =
+  Unit.checkExpectWith Bool.toString 
+  "isAlpha 9"
+  (fn () => isAlpha #"9")
+  false;
+
 (**** Problem I ****)
-(*
-fun svgCircle (cx, cy, r, fill) = "NOT IMPLEMENTED YET"
+
+(* 
+> svgCircle (120, 150, 60, "white");
+val it = "<circle cx=\"120\" cy=\"150\" r=\"60\" fill=\"white\" />" : string
+
+svgCircle (200, 300, 100, "red");
+val it = "<circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />" : string
+ *)
+
+fun svgCircle (cx, cy, r, fill) = (
+let
+	val cx_str : string = Int.toString cx;
+	val cy_str : string = Int.toString cy;
+	val r_str : string = Int.toString r;
+in
+	"<circle cx=\"" ^ cx_str ^ "\" cy=\"" ^ cy_str ^ "\" r=\"" ^ r_str ^ "\" fill=\"" ^ fill ^ "\" />"
+end
+);
 
 val () =
   Unit.checkExpectWith (fn x => x)
   "svgCircle (200, 300, 100, \"red\") should return <circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />"
   (fn () => svgCircle (200, 300, 100, "red"))
   "<circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />";
-*)
+
 (**** Problem J ****)
 (*
 fun partition p (x :: xs) = ([],[])
