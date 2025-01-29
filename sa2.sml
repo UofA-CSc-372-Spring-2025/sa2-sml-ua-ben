@@ -1,10 +1,12 @@
 (* Solutions to SA2 assignment, Intro to ML *)
 
 (* Name: Benjmain Seckeler                                    *)
-(* Time spent on HW6: 3
+(* Time spent on HW6: 4
 *)
 
 (* Collaborators and references:
+* smlhelp.github.io/
+* chatgpt
 *)
 
 (* indicate planning to use the Unit testing module *)
@@ -99,14 +101,53 @@ val () =
   (fn () => minlist [1,2,3,4,0])
   0
 
+val () =
+  Unit.checkExpectWith Int.toString
+  "minlist [1,2,-33,4,0] should be -33"
+  (fn () => minlist [1,2,~33,4,4])
+  ~33
+
 (**** Problem E ****)
-(*
+
 exception Mismatch
 
-fun zip _ = []
-*)
+fun zip [] [] = []
+  | zip (x::xs) (y::ys) = (x, y) :: zip xs ys
+  | zip (x::xs) [] = raise Mismatch
+  | zip [] (x::xs) = raise Mismatch
+  ;
+
+fun tupleToString(x, y) = "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")";
+
+val a = zip [3,2] [2,1];
+printTuple(List.nth (a, 1));
+
+(* TODO : Test cases for this *)
+
+(*
+val () =
+  Unit.checkExnWith (Unit.listString tupleToString)
+  "missmatched zip [] [] should raise an exception"
+  (fn () => zip [3,2,1] [1, 2])
+  [(1,2)]
+  *)
+
+(*
+val () =
+  Unit.checkExpectWith
+  "Small testcase #0"
+  (fn () => zip [0, 1] [1, 0])
+  [(0, 1), (1, 0)]
+  *)
 (**** Problem F ****)
 (*
+
+  | zip [] x = raise Mismatch
+  | zip x [] = raise Mismatch
+  | zip _ x = raise Mismatch
+  | zip x _ = raise Mismatch
+
+
 fun concat xs = xs
 *)
 (**** Problem G ****)
