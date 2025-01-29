@@ -117,17 +117,28 @@ fun zip [] [] = []
   | zip [] (x::xs) = raise Mismatch
   ;
 
-fun tupleToString(x, y) = "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")";
-
-(* TODO : Test cases for this *)
-
-(*
 val () =
-  Unit.checkExnWith (Unit.listString tupleToString)
-  "missmatched zip [] [] should raise an exception"
+  Unit.checkExpectWith (Unit.listString (Unit.pairString String.toString Int.toString))
+  "missmatched zip [asd, tee, boo] [1, 2, 3] should raise an exception"
+  (fn () => zip ["asd", "tee", "boo"] [1, 2, 3])
+  [("asd",1), ("tee", 2), ("boo", 3)]
+
+val () =
+  Unit.checkExpectWith (Unit.listString (Unit.pairString Int.toString Int.toString))
+  "missmatched zip [3, 2, 1] [1, 2, 3] should raise an exception"
+  (fn () => zip [3, 7, 9] [1, 2, 3])
+  [(3,1), (7, 2), (9, 3)]
+
+val () =
+  Unit.checkExpectWith (Unit.listString (Unit.pairString Int.toString Int.toString))
+  "missmatched zip [3, 2, 1] [1, 2, 3] should raise an exception"
+  (fn () => zip [3,2,1] [1, 2, 3])
+  [(3,1), (2, 2), (1, 3)]
+
+val () =
+  Unit.checkExnWith (Unit.listString (Unit.pairString Int.toString Int.toString))
+  "missmatched zip [3,2,1] [1,2] should raise an exception"
   (fn () => zip [3,2,1] [1, 2])
-  [(1,2)]
-  *)
 
 (*
 val () =
