@@ -14,8 +14,8 @@ use "Unit.sml";
 
 (**** Problem A ****)
 
-fun mynull [] : () = true
-  | mynull (_::_)   = false
+fun mynull [] = true
+  | mynull (_::_)   = false;
 
 val () =
     Unit.checkExpectWith Bool.toString "mynull [] should be true"
