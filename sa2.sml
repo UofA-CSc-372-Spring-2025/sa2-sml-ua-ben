@@ -1,12 +1,14 @@
 (* Solutions to SA2 assignment, Intro to ML *)
 
 (* Name: Benjmain Seckeler                                    *)
-(* Time spent on HW6: 6
+(* Time spent on HW6: 7
 *)
 
 (* Collaborators and references:
-* smlhelp.github.io/
-* chatgpt
+*
+* smlhelp.github.io
+* chatgpt with an aggressive english accent
+*
 *)
 
 (* indicate planning to use the Unit testing module *)
@@ -33,6 +35,9 @@ val () =
     false
 
 (**** Problem B ****)
+
+(* i tried to write this in a c like way and it doesn't make much sense in
+ *  hindsight! *)
 
 val vowels = [#"a", #"e", #"i", #"o", #"u"]
 
@@ -111,34 +116,39 @@ val () =
 
 exception Mismatch
 
-fun zip [] [] = []
-  | zip (x::xs) (y::ys) = (x, y) :: zip xs ys
-  | zip (x::xs) [] = raise Mismatch
-  | zip [] (x::xs) = raise Mismatch
+fun zip ([], []) = []
+  | zip ((x::xs), (y::ys)) = (x, y) :: zip(xs, ys)
+  | zip (_, _) = raise Mismatch
   ;
 
 val () =
   Unit.checkExpectWith (Unit.listString (Unit.pairString String.toString Int.toString))
-  "missmatched zip [asd, tee, boo] [1, 2, 3] should raise an exception"
-  (fn () => zip ["asd", "tee", "boo"] [1, 2, 3])
+  "zipping [asd, tee, boo] [1, 2, 3]"
+  (fn () => zip (["asd", "tee", "boo"], [1, 2, 3]))
   [("asd",1), ("tee", 2), ("boo", 3)]
 
 val () =
   Unit.checkExpectWith (Unit.listString (Unit.pairString Int.toString Int.toString))
-  "missmatched zip [3, 2, 1] [1, 2, 3] should raise an exception"
-  (fn () => zip [3, 7, 9] [1, 2, 3])
+  "zipping [3, 2, 1] [1, 2, 3]"
+  (fn () => zip ([3, 7, 9], [1, 2, 3]))
   [(3,1), (7, 2), (9, 3)]
 
 val () =
   Unit.checkExpectWith (Unit.listString (Unit.pairString Int.toString Int.toString))
-  "missmatched zip [3, 2, 1] [1, 2, 3] should raise an exception"
-  (fn () => zip [3,2,1] [1, 2, 3])
+  "zipping [3, 2, 1] [1, 2, 3]"
+  (fn () => zip ([3,2,1], [1, 2, 3]))
   [(3,1), (2, 2), (1, 3)]
+
+val () =
+  Unit.checkExpectWith (Unit.listString (Unit.pairString Int.toString Int.toString))
+  "zipping [] []"
+  (fn () => zip ([], []))
+  []
 
 val () =
   Unit.checkExnWith (Unit.listString (Unit.pairString Int.toString Int.toString))
   "missmatched zip [3,2,1] [1,2] should raise an exception"
-  (fn () => zip [3,2,1] [1, 2])
+  (fn () => zip ([3,2,1], [1, 2]))
 
 (*
 val () =
@@ -147,6 +157,7 @@ val () =
   (fn () => zip [0, 1] [1, 0])
   [(0, 1), (1, 0)]
   *)
+
 (**** Problem F ****)
 
 fun concat (x::[]) = x
