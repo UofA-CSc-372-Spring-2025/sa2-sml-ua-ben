@@ -1,14 +1,12 @@
 (* Solutions to SA2 assignment, Intro to ML *)
 
 (* Name: Benjmain Seckeler                                    *)
-(* Time spent on HW6: 7
+(* Time spent on HW6: 6 hours
 *)
 
 (* Collaborators and references:
-*
 * smlhelp.github.io
 * chatgpt with an aggressive english accent
-*
 *)
 
 (* indicate planning to use the Unit testing module *)
@@ -16,7 +14,7 @@ use "Unit.sml";
 
 (**** Problem A ****)
 
-fun mynull []       = true
+fun mynull [] : () = true
   | mynull (_::_)   = false
 
 val () =
@@ -298,7 +296,7 @@ fun partitionByValue p v [] = []
   | partitionByValue p v (x::xs) = (if p x = v then x :: partitionByValue p v xs
 									else partitionByValue p v xs)
 
-(* Could probably also do this with folding, but this way feels a bit more
+(* Could do this with folding, but this way feels a bit more
 * resusable. *)
 fun partition p x = (partitionByValue p true x, partitionByValue p false x);
 
